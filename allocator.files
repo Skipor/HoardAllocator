@@ -1,0 +1,5 @@
+src/internals.cpp
+src/internals.h
+src/malloc-intercept.cpp
+src/tracing.cpp
+src/tracing.h
