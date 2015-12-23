@@ -3,7 +3,7 @@
 
 #include <utils.h>
 #include "BaseHeap.h"
-#include "BlockStack.h"
+#include "BlockLinkedStack.h"
 
 
 
@@ -21,7 +21,7 @@ public:
                        prev_(nullptr),
 											 magic_number_(0),
 											 one_block_size_(0),
-											 size_(0),
+											 number_of_blocks_(0),
 											 blocks_allocated_(0),
 											 uninited_blocs_left_(0),
 											 blocks_start_(nullptr),
@@ -93,13 +93,13 @@ public:
     assert(block_size < kSuperblockSize && "Block must bee smaller than Superblock");
     assert(block_size >= kMinBlockSize && "Too small one_block_size");
 		one_block_size_ = block_size;
-		size_ = (kSuperblockSize - sizeof(SuperblockHeader)) / one_block_size_;
+		number_of_blocks_ = (kSuperblockSize - sizeof(SuperblockHeader)) / one_block_size_;
 		blocks_start_ = reinterpret_cast<char *> (this) + RoundUp(sizeof(SuperblockHeader), one_block_size_);
     assert(reinterpret_cast<size_t>(blocks_start_) % one_block_size_ == 0 && "Invalid block_start allignment");
 		noninited_blocks_start_ = blocks_start_;
-		assert(size_ == (reinterpret_cast<char *>(this) + kSuperblockSize - blocks_start_) / block_size);
+		assert(number_of_blocks_ == (reinterpret_cast<char *>(this) + kSuperblockSize - blocks_start_) / block_size);
 		blocks_allocated_ = 0;
-		uninited_blocs_left_ = size_;
+		uninited_blocs_left_ = number_of_blocks_;
 		magic_number_ = GetSuperblockMagic();
     block_stack_.Reset();
 	}
@@ -133,7 +133,7 @@ public:
 	}
 
 	size_t size() const {
-		return size_;
+		return number_of_blocks_;
 	}
 	size_t blocks_allocated() const {
 		return blocks_allocated_;
@@ -179,7 +179,7 @@ protected:
   };
 
 private:
-	lock_t lock_;
+//	lock_t lock_;
 
   //this fields must be changed only with owner lock taken
 	std::atomic<BaseHeap *> owner_;
@@ -187,10 +187,10 @@ private:
 	Superblock *prev_;
 
   //this fields must be changed only with header lock taken
-	BlockStack block_stack_;
+  BlockLinkedStack block_stack_;
 	size_t magic_number_; // equals kMagicNumber xor *this if valid
 	size_t one_block_size_; // power of 2
-	size_t size_;
+	size_t number_of_blocks_;
 	size_t blocks_allocated_;
 	size_t uninited_blocs_left_;
 

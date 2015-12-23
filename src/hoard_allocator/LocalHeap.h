@@ -197,7 +197,7 @@ private:
   }
 
 	static size_t GetBinNum(size_t allocated_blocks, size_t blocks_count) {
-		switch (RoundUp(allocated_blocks * 8, blocks_count) / blocks_count) {
+		switch (RoundUp(allocated_blocks * 8, blocks_count) / blocks_count) { //TODO change this
 			case 0: return 0; // e == 0
 			case 1: return 1; // x <= 1/8
 			case 2: return 2; // <= 1/4

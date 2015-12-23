@@ -41,7 +41,6 @@ void *InternalAlloc(size_t size, size_t alignment) {
   InitOnce();
   check_fatal(IsValidAlignment(alignment), "Invalid alignment");
 
-  size = std::max(size, kMaxBlockSize);
 //  if (size < kMinBlockSize) {
 //    trace("InternalAlloc , change size to ", kMinBlockSize);
 //    size = kMinBlockSize;
@@ -51,6 +50,7 @@ void *InternalAlloc(size_t size, size_t alignment) {
 //    trace("InternalAlloc , change alignment to ", kMinBlockSize);
 //    alignment = kDefaultAlignment;
 //  }
+  trace("InternalAlloc ", "size became: ", size);
 
 	void *result;
 	if (size > kMaxBlockSize) {

@@ -66,6 +66,10 @@ public:
     return size_;
   }
 
+  Superblock * Next(Superblock * superblock) {
+    return  superblock->header().next();
+  }
+
   void CheckInvariantsOrDie() {
 #ifndef NDEBUG
     size_t current_size = 0;

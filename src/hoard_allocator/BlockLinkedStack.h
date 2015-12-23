@@ -5,15 +5,15 @@
 
 namespace hoard {
 
-class BlockStack  {
+class BlockLinkedStack {
 
 
 public:
-  BlockStack() : head_(nullptr) {
+  BlockLinkedStack() : head_(nullptr) {
   }
 
-  BlockStack(const BlockStack &) = delete;
-  BlockStack & operator=(const BlockStack &) = delete;
+  BlockLinkedStack(const BlockLinkedStack&) = delete;
+  BlockLinkedStack& operator=(const BlockLinkedStack&) = delete;
 
   void Push(Block *t) {
     t->set_next(head_);
