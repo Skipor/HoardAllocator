@@ -1,6 +1,6 @@
 Hoard Memory Allocator
 ======================
-[![Build Status](https://travis-ci.org/skipor/Hoard-Allocator.svg?branch=master)](https://travis-ci.org/ndkoval/Hoard-Allocator)
+[![Build Status](https://travis-ci.org/skipor/Hoard-Allocator.svg?branch=master)](https://travis-ci.org/skipor/Hoard-Allocator)
 
 Article "Hoard: A Scalable Memory Allocator for Multithreaded Applications"
 http://people.cs.umass.edu/~emery/pubs/berger-asplos2000.pdf
